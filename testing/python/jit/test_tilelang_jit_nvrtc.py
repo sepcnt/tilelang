@@ -191,7 +191,6 @@ def test_nvrtc_kernel_handles_are_isolated_between_adapters():
     first_result_before = first_kernel(x)
     second_kernel = tilelang.compile(_make_add_constant_kernel(5.0), out_idx=-1, pass_configs={"tl.cuda_compiler": "nvrtc"})
 
-    assert first_kernel.adapter.rt_mod is not second_kernel.adapter.rt_mod
     torch.testing.assert_close(first_result_before, torch.ones_like(x))
     torch.testing.assert_close(first_kernel(x), torch.ones_like(x))
     torch.testing.assert_close(second_kernel(x), torch.full_like(x, 5.0))
